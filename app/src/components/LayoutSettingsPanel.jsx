@@ -6,10 +6,6 @@ export default function LayoutSettingsPanel({ layout, onPaperSizeChange, onOrien
 
   return (
     <div className="control-group">
-      <h2 className="section-title">
-        <Settings size={16} />
-        Sheet Settings
-      </h2>
       <label className="control-group">
         <span className="control-label">Paper Size</span>
         <select className="select-input" value={layout.paperSize} onChange={(event) => onPaperSizeChange(event.target.value)}>

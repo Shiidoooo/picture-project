@@ -11,6 +11,7 @@ import CropEditorModal from './components/CropEditorModal';
 import Sidebar from './components/Sidebar';
 import MainStage from './components/MainStage';
 import UploadCropModal from './components/UploadCropModal';
+import DisclaimerModal from './components/DisclaimerModal';
 
 const getTemplate = (templateId) => LAYOUT_TEMPLATES.find((template) => template.id === templateId);
 
@@ -18,6 +19,7 @@ function App() {
   const { layout, updateLayout, undo, redo, canUndo, canRedo } = useLayoutHistory(DEFAULT_LAYOUT);
   const [sourceImages, setSourceImages] = useState([]);
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
+  const [isDisclaimerOpen, setIsDisclaimerOpen] = useState(false);
   const [editingSourceId, setEditingSourceId] = useState(null);
   const [isExporting, setIsExporting] = useState(false);
   const [notification, setNotification] = useState(null);
@@ -268,9 +270,10 @@ function App() {
         isExporting={isExporting}
         notification={notification}
         onDismissNotification={() => setNotification(null)}
+        onOpenDisclaimer={() => setIsDisclaimerOpen(true)}
       />
 
-      <MainStage layout={layout} sourceImages={sourceImages} />
+      <MainStage layout={layout} sourceImages={sourceImages} onOpenUpload={() => setIsUploadModalOpen(true)} />
 
       <UploadCropModal
         isOpen={isUploadModalOpen}
@@ -286,6 +289,11 @@ function App() {
           onSave={saveCrop}
         />
       )}
+
+      <DisclaimerModal 
+        isOpen={isDisclaimerOpen} 
+        onClose={() => setIsDisclaimerOpen(false)} 
+      />
     </div>
   );
 }

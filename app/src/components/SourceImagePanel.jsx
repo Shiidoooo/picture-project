@@ -3,11 +3,7 @@ import { Crop, ImagePlus, Trash2, Upload } from 'lucide-react';
 export default function SourceImagePanel({ sourceImages, onOpenUpload, onEditCrop, onRemoveSource, onAssignSourceToAll }) {
   return (
     <div className="control-group">
-      <div className="section-heading-row">
-        <h2 className="section-title">
-          <ImagePlus size={16} />
-          Source Images
-        </h2>
+      <div className="section-heading-row" style={{ justifyContent: 'flex-end', marginBottom: '8px' }}>
         <button className="icon-button" type="button" title="Add images" aria-label="Add images" onClick={onOpenUpload}>
           <Upload size={17} />
         </button>
