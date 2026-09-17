@@ -976,29 +976,33 @@ button.upload-area {
 
 @media (max-width: 760px) {
   body {
-    overflow: auto;
+    overflow: hidden;
   }
 
   .app-container {
-    display: block;
+    display: flex;
+    flex-direction: column;
+    height: 100dvh;
     min-height: 100vh;
-    height: auto;
+  }
+
+  .main-stage {
+    flex: 0 0 45vh;
+    min-height: 0;
+    padding: 16px;
+    border-bottom: 1px solid var(--surface-border);
   }
 
   .sidebar {
     width: 100%;
-    min-height: min(680px, 82vh);
+    flex: 1;
+    min-height: 0;
   }
 
   .sidebar-content,
   .sidebar-footer,
   .sidebar-header {
     padding: 16px;
-  }
-
-  .main-stage {
-    min-height: 520px;
-    padding: 32px 16px;
   }
 
   .crop-editor-body {

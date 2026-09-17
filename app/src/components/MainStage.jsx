@@ -1,11 +1,23 @@
-import { useMemo } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 import { calculateLayout } from '../utils/calculateLayout';
 import { getPaperDimensions } from '../utils/paperDimensions';
 import PhotoCell from './PhotoCell';
 
 export default function MainStage({ layout, sourceImages }) {
+  const [windowSize, setWindowSize] = useState({ width: window.innerWidth, height: window.innerHeight });
+  
+  useEffect(() => {
+    const handleResize = () => setWindowSize({ width: window.innerWidth, height: window.innerHeight });
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   const paper = getPaperDimensions(layout.paperSize, layout.orientation);
-  const scale = Math.min(1.75, 560 / paper.width, 620 / paper.height);
+  const isMobile = windowSize.width <= 760;
+  const maxWidth = isMobile ? windowSize.width - 32 : 560;
+  const maxHeight = isMobile ? (windowSize.height * 0.45) - 32 : 620;
+  const scale = Math.min(isMobile ? 1.2 : 1.75, maxWidth / paper.width, maxHeight / paper.height);
+  
   const paperWidth = paper.width * scale;
   const paperHeight = paper.height * scale;
   const calculatedLayout = useMemo(
