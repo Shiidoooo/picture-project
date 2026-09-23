@@ -23,6 +23,7 @@ function App() {
   const [editingSourceId, setEditingSourceId] = useState(null);
   const [isExporting, setIsExporting] = useState(false);
   const [notification, setNotification] = useState(null);
+  const [isImageMinimized, setIsImageMinimized] = useState(false);
   const sourceImagesRef = useRef([]);
 
   useEffect(() => {
@@ -243,7 +244,7 @@ function App() {
   const editingSource = sourceImages.find((source) => source.id === editingSourceId) || null;
 
   return (
-    <div className="app-container">
+    <div className={`app-container ${isImageMinimized ? 'is-image-minimized' : ''}`}>
       <Sidebar
         layout={layout}
         sourceImages={sourceImages}
@@ -270,10 +271,12 @@ function App() {
         isExporting={isExporting}
         notification={notification}
         onDismissNotification={() => setNotification(null)}
+        isImageMinimized={isImageMinimized}
+        onToggleImageMinimized={() => setIsImageMinimized(!isImageMinimized)}
         onOpenDisclaimer={() => setIsDisclaimerOpen(true)}
       />
 
-      <MainStage layout={layout} sourceImages={sourceImages} onOpenUpload={() => setIsUploadModalOpen(true)} />
+      <MainStage layout={layout} sourceImages={sourceImages} onOpenUpload={() => setIsUploadModalOpen(true)} isImageMinimized={isImageMinimized} />
 
       <UploadCropModal
         isOpen={isUploadModalOpen}

@@ -1,7 +1,7 @@
-import { Ruler, Scissors, Settings } from 'lucide-react';
+import { Ruler, Scissors, Settings, FileWarning } from 'lucide-react';
 import { PAPER_SIZE_GROUPS } from '../data/paperSizes';
 
-export default function LayoutSettingsPanel({ layout, onPaperSizeChange, onOrientationChange, onSettingsChange }) {
+export default function LayoutSettingsPanel({ layout, onPaperSizeChange, onOrientationChange, onSettingsChange, onOpenDisclaimer }) {
   const { settings } = layout;
 
   return (
@@ -54,6 +54,19 @@ export default function LayoutSettingsPanel({ layout, onPaperSizeChange, onOrien
           <option value="300">300 DPI</option>
         </select>
       </label>
+
+      <div style={{ marginTop: 'auto', paddingTop: '24px', borderTop: '1px solid var(--surface-border)' }}>
+        <button 
+          onClick={onOpenDisclaimer} 
+          style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', width: '100%', background: 'transparent', border: 'none', color: 'var(--text-secondary)', fontSize: '0.75rem', cursor: 'pointer', transition: 'color 0.2s' }}
+          onMouseOver={(e) => e.target.style.color = 'var(--text-primary)'}
+          onMouseOut={(e) => e.target.style.color = 'var(--text-secondary)'}
+          type="button"
+        >
+          <FileWarning size={14} />
+          Privacy & Terms of Use
+        </button>
+      </div>
     </div>
   );
 }

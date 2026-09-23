@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { FolderOpen, ImagePlus, Layers, LayoutTemplate, Redo2, Save, Settings, Undo2, FileWarning, Download } from 'lucide-react';
+import { ChevronRight, ChevronLeft, FolderOpen, ImagePlus, Layers, LayoutTemplate, Redo2, Save, Settings, Undo2, FileWarning, Download, Minimize2 } from 'lucide-react';
 import { PHOTO_PRESETS } from '../data/photoPresets';
 import AddPhotoSizeForm from './AddPhotoSizeForm';
 import ErrorAlert from './ErrorAlert';
@@ -42,6 +42,8 @@ export default function Sidebar({
   isExporting,
   notification,
   onDismissNotification,
+  isImageMinimized,
+  onToggleImageMinimized,
   onOpenDisclaimer,
 }) {
   const [activeTab, setActiveTab] = useState('source');
@@ -81,7 +83,7 @@ export default function Sidebar({
         )}
 
         {activeTab === 'settings' && (
-          <LayoutSettingsPanel layout={layout} onPaperSizeChange={onPaperSizeChange} onOrientationChange={onOrientationChange} onSettingsChange={onSettingsChange} />
+          <LayoutSettingsPanel layout={layout} onPaperSizeChange={onPaperSizeChange} onOrientationChange={onOrientationChange} onSettingsChange={onSettingsChange} onOpenDisclaimer={onOpenDisclaimer} />
         )}
 
         {activeTab === 'layout' && (
@@ -106,13 +108,13 @@ export default function Sidebar({
           <ErrorAlert message={notification.message} variant={notification.variant} onDismiss={onDismissNotification} />
         )}
         <button 
-          onClick={onOpenDisclaimer} 
+          onClick={onToggleImageMinimized} 
           style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', width: '100%', background: 'transparent', border: 'none', color: 'var(--text-secondary)', fontSize: '0.75rem', cursor: 'pointer', transition: 'color 0.2s' }}
           onMouseOver={(e) => e.target.style.color = 'var(--text-primary)'}
           onMouseOut={(e) => e.target.style.color = 'var(--text-secondary)'}
         >
-          <FileWarning size={14} />
-          Privacy & Terms of Use
+          {isImageMinimized ? <ChevronRight size={16} /> : <ChevronLeft size={16} />}
+          {isImageMinimized ? 'Expand Preview' : 'Minimize Preview'}
         </button>
       </div>
     </aside>

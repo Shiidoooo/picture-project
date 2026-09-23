@@ -1,11 +1,12 @@
 import { useRef, useState } from 'react';
-import { Check, Maximize2, Minimize2, RotateCcw, X } from 'lucide-react';
+import { Check, Maximize, Maximize2, Minimize, Minimize2, RotateCcw, X } from 'lucide-react';
 import { DEFAULT_CROP, getImageDrawRect, normalizeCrop } from '../utils/imageCrop';
 
 const PREVIEW_SIZE = { width: 260, height: 340 };
 
 export default function CropEditorModal({ source, onClose, onSave }) {
   const [crop, setCrop] = useState(() => normalizeCrop(source?.crop));
+  const [previewExpanded, setPreviewExpanded] = useState(false);
   const dragStart = useRef(null);
 
   if (!source) return null;
@@ -54,7 +55,7 @@ export default function CropEditorModal({ source, onClose, onSave }) {
           </button>
         </div>
 
-        <div className="crop-editor-body">
+        <div className={`crop-editor-body ${previewExpanded ? 'is-preview-expanded' : ''}`}>
           <div
             className="crop-preview"
             style={PREVIEW_SIZE}
@@ -73,6 +74,14 @@ export default function CropEditorModal({ source, onClose, onSave }) {
                 height: `${imageRect.height}px`,
               }}
             />
+            <button 
+              className="preview-expand-btn" 
+              type="button" 
+              onClick={(e) => { e.stopPropagation(); setPreviewExpanded(!previewExpanded); }}
+              aria-label={previewExpanded ? "Minimize preview" : "Expand preview"}
+            >
+              {previewExpanded ? <Minimize size={18} /> : <Maximize size={18} />}
+            </button>
           </div>
 
           <div className="crop-controls">
